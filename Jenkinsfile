@@ -20,10 +20,38 @@ pipeline {
             steps {
                 echo 'Installing dependencies and running tests'
                 sh '''
-                    python3 -m venv venv
-                    ./venv/bin/pip install --upgrade pip
-                    ./venv/bin/pip install -r requirements.txt
-                    ./venv/bin/pytest
+                   set -e
+
+                   echo "========================================"
+                   echo "Current directory:"
+                   echo "========================================"
+                   pwd
+
+                   echo "========================================"
+                   echo "Files in workspace:"
+                   echo "========================================"
+                   find . -maxdepth 3 -type f | sort
+
+                   echo "========================================"
+                   echo "Creating Python virtual environment:"
+                   echo "========================================"
+                   python3 -m venv venv
+
+                   echo "========================================"
+                   echo "Installing pip:"
+                   echo "========================================"
+                   ./venv/bin/python -m pip install --upgrade pip
+
+                   echo "========================================"
+                   echo "Installing dependencies:"
+                   echo "========================================"
+                   ./venv/bin/python -m pip install -r requirements.txt
+
+                   echo "========================================"
+                   echo "Running pytest:"
+                   echo "========================================"
+                   ./venv/bin/python -m pytest -v
+
                 '''
             }
         }
