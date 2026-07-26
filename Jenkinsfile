@@ -30,9 +30,8 @@ pipeline {
             steps {
                 echo "Building Docker image ${IMAGE}:${TAG}"
 
-                sh 'docker build -t ... .'
+                sh "docker build -t ${IMAGE}:${TAG} ."
                    
-                '''
             }
         }
 
